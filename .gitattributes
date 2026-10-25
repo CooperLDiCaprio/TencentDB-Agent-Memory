@@ -1,0 +1,26 @@
+# Normalize line endings: repository blobs are LF, checkouts are LF everywhere.
+# Upstream history was committed with CRLF and no .gitattributes, which breaks
+# Linux builds (bash\r). Renormalized once in the kumoic fork; keep this file.
+* text=auto eol=lf
+
+# Binary assets - never touch
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.otf binary
+*.mp4 binary
+*.webm binary
+*.mp3 binary
+*.zip binary
+*.gz binary
+*.tgz binary
+*.pdf binary
+*.woff binary
+*.node binary
