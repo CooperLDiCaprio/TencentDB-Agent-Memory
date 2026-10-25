@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1
 # ──────────────────────────────────────────────────────────────────────
 # TencentDB-Agent-Memory · MemoryProxy — Production Image
 # ──────────────────────────────────────────────────────────────────────
@@ -31,7 +30,7 @@ FROM node:22-slim AS deps-builder
 # 使用 BuildKit cache mount 缓存 apt 包，避免重复下载
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
-    apt-get update && apt-get install -y --no-install-recommends \
+    sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list.d/debian.sources 2>/dev/null; apt-get update && apt-get install -y --no-install-recommends \
         python3 \
         make \
         g++ \
@@ -67,7 +66,7 @@ FROM node:22-slim AS runtime
 # Runtime essentials only（curl 供 HEALTHCHECK；tini 负责信号处理）
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
-    apt-get update && apt-get install -y --no-install-recommends \
+    sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list.d/debian.sources 2>/dev/null; apt-get update && apt-get install -y --no-install-recommends \
         curl \
         tini \
         ca-certificates
